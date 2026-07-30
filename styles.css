@@ -224,6 +224,18 @@ h1 {
   text-align: center;
 }
 
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .page-header {
   background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
   color: white;
