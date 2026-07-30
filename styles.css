@@ -5,7 +5,8 @@
   --cream: #f6f2ea;
   --text: #233142;
   --muted: #5f6c7b;
-  --navy: #ffffff;
+  --white: #ffffff;
+  --orange: #A86936;
 }
 
 * {
@@ -31,7 +32,7 @@ a {
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  background: linear-gradient(135deg, var(--white) 0%, var(--orange) 100%);
   color: white;
   padding-bottom: 4rem;
 }
