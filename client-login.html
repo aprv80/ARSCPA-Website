@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Login | ARS Advisory Group</title>
+    <meta
+      name="description"
+      content="Access the secure client portal for documents, uploads, and secure communications."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <nav class="nav container">
+        <a class="brand" href="index.html">
+          <img src="Images/Company%20Logo%20copy.png" alt="Shikha Gupta CPA LLC logo" />
+          <span>Shikha Gupta CPA LLC (ARSCPA)</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#services">Services</a>
+          <a href="client-login.html" aria-current="page">Client Login</a>
+          <a href="index.html#about">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </nav>
+
+      <div class="container page-hero">
+        <p class="eyebrow">Secure access</p>
+        <h1>Client Login</h1>
+        <p>
+          Use the secure client portal to access your documents, upload files, and
+          communicate with our team in a protected environment.
+        </p>
+      </div>
+    </header>
+
+    <main class="section container">
+      <div class="login-card">
+        <h2>Where to access your secured portal</h2>
+        <p>
+          The secure portal is available through the button below. Please use this
+          link when you need to sign in, view documents, or share secure files with
+          our office.
+        </p>
+
+        <div class="portal-actions">
+          <button class="btn btn-primary" id="openPortalBtn" type="button">
+            Open Secure Portal
+          </button>
+          <a class="btn btn-secondary portal-link" href="index.html">Return to Home</a>
+        </div>
+
+        <div class="login-note">
+          <h3>Important</h3>
+          <p>
+            You will be leaving this website and opening an external secure portal.
+            Please make sure you are accessing it from a trusted device and network.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-backdrop" id="portalModal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="portalModalTitle">
+        <h3 id="portalModalTitle">You are leaving this site</h3>
+        <p>
+          You are about to open an external secure portal for client access. Continue
+          to the external website?
+        </p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="cancelPortalBtn" type="button">Cancel</button>
+          <button class="btn btn-primary" id="confirmPortalBtn" type="button">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const portalUrl = 'https://arscpa.securefilepro.com/portal/#/login';
+      const openPortalBtn = document.getElementById('openPortalBtn');
+      const portalModal = document.getElementById('portalModal');
+      const cancelPortalBtn = document.getElementById('cancelPortalBtn');
+      const confirmPortalBtn = document.getElementById('confirmPortalBtn');
+
+      function closeModal() {
+        portalModal.classList.remove('is-open');
+        portalModal.setAttribute('aria-hidden', 'true');
+      }
+
+      function openModal() {
+        portalModal.classList.add('is-open');
+        portalModal.setAttribute('aria-hidden', 'false');
+      }
+
+      openPortalBtn.addEventListener('click', openModal);
+      cancelPortalBtn.addEventListener('click', closeModal);
+      confirmPortalBtn.addEventListener('click', function () {
+        closeModal();
+        window.location.href = portalUrl;
+      });
+
+      portalModal.addEventListener('click', function (event) {
+        if (event.target === portalModal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>
