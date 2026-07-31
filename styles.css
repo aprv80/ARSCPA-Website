@@ -190,12 +190,20 @@ h1 {
 }
 
 .card,
-.contact-card,
 .quote-box {
   background: white;
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1.1rem;
   box-shadow: 0 10px 30px rgba(15, 35, 64, 0.06);
+  /* line-height: 1.0; */
+}
+
+.contact-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.1rem;
+  box-shadow: 0 10px 30px rgba(15, 35, 64, 0.06);
+  line-height: 1.0;
 }
 
 .about-grid {
@@ -233,14 +241,16 @@ h1 {
   align-items: center;
   gap: 1rem;
   text-align: left;
+  font-size: 0.75rem;
 }
 
 .footer-links {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   flex-wrap: wrap;
   gap: 1rem;
   margin: 0;
+  font-size: 0.5rem;
 }
 
 .footer-links a {
@@ -258,7 +268,7 @@ h1 {
 
 .footer-logo {
   display: block;
-  max-height: 42px;
+  max-height: 30px;
   width: auto;
   object-fit: contain;
 }

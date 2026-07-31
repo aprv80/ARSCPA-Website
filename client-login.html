@@ -20,6 +20,7 @@
         <div class="nav-links">
           <a href="index.html#services">Services</a>
           <a href="client-login.html" aria-current="page">Client Login</a>
+          <a href="useful-links.html">Useful Links</a>
           <a href="index.html#about">About</a>
           <a href="contact.html">Contact</a>
         </div>
@@ -96,7 +97,8 @@
       cancelPortalBtn.addEventListener('click', closeModal);
       confirmPortalBtn.addEventListener('click', function () {
         closeModal();
-        window.location.href = portalUrl;
+        /*window.location.href = portalUrl;*/
+        window.open(portalUrl, '_blank');
       });
 
       portalModal.addEventListener('click', function (event) {
