@@ -135,96 +135,96 @@
 
                     <!-- Leasing Path Info -->
                     <div class="section-title">Leasing Parameters</div>
-                        <div class="input-group">
-                            <label for="leaseUpfront">Upfront Fees / Security Deposit</label>
-                            <div class="input-box has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" id="leaseUpfront" value="1500">
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label for="leaseMonthly">Monthly Lease Payment</label>
-                            <div class="input-box has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" id="leaseMonthly" value="950">
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label for="leaseBuyout">End-of-Lease Buyout Cost <span style="font-weight:normal;color:#64748b;">(If keeping)</span></label>
-                            <div class="input-box has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" id="leaseBuyout" value="0">
-                            </div>
-                        </div>
-                    <div>
-
-                </div>
-            </div>
-
-            <button onclick="calculateBuyVsLease()">Compare Financial Impact</button>
-
-            <div class="results-panel" id="resultsPanel">
-                <div class="verdict-banner" id="verdictText">
-                    Buying saves you money overall!
-                </div>
-
-                <div class="comparison-tabs">
-                    <!-- Buy Analysis -->
-                    <div class="comp-card buy-card">
-                        <h4>Buying Cost Breakdown</h4>
-                        <div class="data-row">
-                            <span>Down Payment:</span>
-                            <span id="lblBuyDown">$0.00</span>
-                        </div>
-                        <div class="data-row">
-                            <span>Total Loan Payments:</span>
-                            <span id="lblBuyLoanTotal">$0.00</span>
-                        </div>
-                        <div class="data-row">
-                            <span>Less: Resale Value:</span>
-                            <span id="lblBuyResale" style="color: #16a34a;">-$0.00</span>
-                        </div>
-                        <div class="data-row total-row">
-                            <span>Net Cost to Own:</span>
-                            <span id="lblBuyNet">$0.00</span>
+                    <div class="input-group">
+                        <label for="leaseUpfront">Upfront Fees / Security Deposit</label>
+                        <div class="input-box has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="leaseUpfront" value="1500">
                         </div>
                     </div>
+                    <div class="input-group">
+                        <label for="leaseMonthly">Monthly Lease Payment</label>
+                        <div class="input-box has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="leaseMonthly" value="950">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="leaseBuyout">End-of-Lease Buyout Cost <span style="font-weight:normal;color:#64748b;">(If keeping)</span></label>
+                        <div class="input-box has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="leaseBuyout" value="0">
+                        </div>
+                    </div>
+                    <!-- <div>
 
-                    <!-- Lease Analysis -->
-                    <div class="comp-card lease-card">
-                        <h4>Leasing Cost Breakdown</h4>
-                        <div class="data-row">
-                            <span>Upfront Fees:</span>
-                            <span id="lblLeaseUpfront">$0.00</span>
+                    </div> -->
+                </div>
+
+                <button onclick="calculateBuyVsLease()">Compare Financial Impact</button>
+
+                <div class="results-panel" id="resultsPanel">
+                    <div class="verdict-banner" id="verdictText">
+                        Buying saves you money overall!
+                    </div>
+
+                    <div class="comparison-tabs">
+                        <!-- Buy Analysis -->
+                        <div class="comp-card buy-card">
+                            <h4>Buying Cost Breakdown</h4>
+                            <div class="data-row">
+                                <span>Down Payment:</span>
+                                <span id="lblBuyDown">$0.00</span>
+                            </div>
+                            <div class="data-row">
+                                <span>Total Loan Payments:</span>
+                                <span id="lblBuyLoanTotal">$0.00</span>
+                            </div>
+                            <div class="data-row">
+                                <span>Less: Resale Value:</span>
+                                <span id="lblBuyResale" style="color: #16a34a;">-$0.00</span>
+                            </div>
+                            <div class="data-row total-row">
+                                <span>Net Cost to Own:</span>
+                                <span id="lblBuyNet">$0.00</span>
+                            </div>
                         </div>
-                        <div class="data-row">
-                            <span>Total Term Payments:</span>
-                            <span id="lblLeaseTotalPayments">$0.00</span>
-                        </div>
-                        <div class="data-row">
-                            <span>Buyout Cost:</span>
-                            <span id="lblLeaseBuyout">$0.00</span>
-                        </div>
-                        <div class="data-row total-row">
-                            <span>Net Cost to Lease:</span>
-                            <span id="lblLeaseNet">$0.00</span>
+
+                        <!-- Lease Analysis -->
+                        <div class="comp-card lease-card">
+                            <h4>Leasing Cost Breakdown</h4>
+                            <div class="data-row">
+                                <span>Upfront Fees:</span>
+                                <span id="lblLeaseUpfront">$0.00</span>
+                            </div>
+                            <div class="data-row">
+                                <span>Total Term Payments:</span>
+                                <span id="lblLeaseTotalPayments">$0.00</span>
+                            </div>
+                            <div class="data-row">
+                                <span>Buyout Cost:</span>
+                                <span id="lblLeaseBuyout">$0.00</span>
+                            </div>
+                            <div class="data-row total-row">
+                                <span>Net Cost to Lease:</span>
+                                <span id="lblLeaseNet">$0.00</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="disclaimer">
-                <strong>CPA Note:</strong> This calculation outlines basic nominal cash layouts. It does not factor in corporate income tax brackets, Section 179 immediate depreciation deductions, or operating vs. capital lease structures.
-            </div>
-        </div>  
+                <div class="disclaimer">
+                    <strong>CPA Note:</strong> This calculation outlines basic nominal cash layouts. It does not factor in corporate income tax brackets, Section 179 immediate depreciation deductions, or operating vs. capital lease structures.
+                </div>
+            </div>  
 
-    <!--</div> -->
+                <!--</div> -->
 
-            <!-- <div class="calculator-card">
-            </div>
+                <!-- <div class="calculator-card">
+                </div>
 
-            <div class="calculator-card">
-            </div> -->
+                <!-- <div class="calculator-card">
+                </div> -->
 
             <script>
                 function calculateBuyVsLease() {
@@ -342,8 +342,8 @@
                     </div>
                 </div>
                 <div class="disclaimer">
-                <strong>CPA Note:</strong> This calculation outlines basic assumptions. It does not factor in specific tax brackets, contribution limits, or other retirement account rules. Consult a qualified CPA for personalized advice.
-            </div>
+                    <strong>CPA Note:</strong> This calculation outlines basic assumptions. It does not factor in specific tax brackets, contribution limits, or other retirement account rules. Consult a qualified CPA for personalized advice.
+                </div>
             </div>
 
             <!-- SELF EMPLOYMENT TAX CALCULATOR -->           
