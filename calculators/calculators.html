@@ -6,6 +6,7 @@
     <title>Calculators | Shikha Gupta CPA LLC</title>
     <meta name="description" content="Calculate your self-employment taxes with our easy-to-use estimator." />
     <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="calculators.css" />
   </head>
   <body>
     <header class="page-header">
@@ -23,57 +24,18 @@
         </div>
       </nav>
       <div class="container page-hero">
-        <p class="eyebrow">Service detail</p>
-        <h1>Calculator </h1>
-        <p>Quickly estimate your Social Security and Medicare tax obligations.</p>
+        <p class="eyebrow"></p>
+        <h1>Standard Calculators </h1>
+        <p></p>
       </div>
     </header>
 
-    <body>
+
 
     <main class="section container">
         <div class="service-grid">
-            <div class="calculator-card">
-                <h2>Self-Employment Tax Calculator</h2>
-                <p class="subtitle">Quickly estimate your Social Security and Medicare tax obligations.</p>
-                
-                <div class="form-group">
-                    <label for="netIncome">Estimated Net Annual Business Profit</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">$</span>
-                        <input type="number" id="netIncome" placeholder="e.g. 50000" min="0" required>
-                    </div>
-                </div>
-
-                <button onclick="calculateTax()">Calculate Estimated Tax</button>
-
-                <div class="results" id="taxResults">
-                    <div class="result-row">
-                        <span>Taxable Net Earnings (92.35%):</span>
-                        <span id="taxableEarnings">$0.00</span>
-                    </div>
-                    <div class="result-row">
-                        <span>Social Security Tax (12.4%):</span>
-                        <span id="socialSecurityTax">$0.00</span>
-                    </div>
-                    <div class="result-row">
-                        <span>Medicare Tax (2.9%):</span>
-                        <span id="medicareTax">$0.00</span>
-                    </div>
-                    <div class="result-row total">
-                        <span>Total Self-Employment Tax:</span>
-                        <span id="totalTax">$0.00</span>
-                    </div>
-                    <div class="result-row" style="margin-top: 12px; font-size: 13px;">
-                        <span>Above-the-Line Income Deduction:</span>
-                        <span id="deductionAmount" style="color: #059669; font-weight: 600;">$0.00</span>
-                    </div>
-                </div>
-
-                <div class="disclaimer">
-                    <strong>Disclaimer:</strong> This tool provides an estimate for educational purposes only. It does not account for local taxes, income tax brackets, or phase-outs. Consult a qualified CPA for official tax advice.
-                </div>
-            </div>
+    
+ 
 
             <script>
                 function calculateTax() {
@@ -255,81 +217,370 @@
                 <strong>CPA Note:</strong> This calculation outlines basic nominal cash layouts. It does not factor in corporate income tax brackets, Section 179 immediate depreciation deductions, or operating vs. capital lease structures.
             </div>
         </div>  
+
+    <!--</div> -->
+
+            <!-- <div class="calculator-card">
             </div>
 
             <div class="calculator-card">
-            </div>
+            </div> -->
 
+            <script>
+                function calculateBuyVsLease() {
+                    const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
+                    const termMonths = parseInt(document.getElementById('termMonths').value) || 0;
+                    
+                    const buyDown = parseFloat(document.getElementById('buyDownPayment').value) || 0;
+                    const buyInterest = parseFloat(document.getElementById('buyInterestRate').value) || 0;
+                    const buyResale = parseFloat(document.getElementById('buyResaleValue').value) || 0;
+
+                    const leaseUpfront = parseFloat(document.getElementById('leaseUpfront').value) || 0;
+                    const leaseMonthly = parseFloat(document.getElementById('leaseMonthly').value) || 0;
+                    const leaseBuyout = parseFloat(document.getElementById('leaseBuyout').value) || 0;
+
+                    // --- BUY SIDE CALCULATION ---
+                    const loanPrincipal = purchasePrice - buyDown;
+                    let totalLoanPayments = 0;
+
+                    if (loanPrincipal > 0 && buyInterest > 0 && termMonths > 0) {
+                        const monthlyRate = (buyInterest / 100) / 12;
+                        const monthlyPayment = (loanPrincipal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termMonths));
+                        totalLoanPayments = monthlyPayment * termMonths;
+                    } else {
+                        totalLoanPayments = loanPrincipal;
+                    }
+
+                    const netBuyCost = buyDown + totalLoanPayments - buyResale;
+
+                    // --- LEASE SIDE CALCULATION ---
+                    const totalLeasePayments = leaseMonthly * termMonths;
+                    const netLeaseCost = leaseUpfront + totalLeasePayments + leaseBuyout;
+
+                    // --- UPDATE DOM ---
+                    document.getElementById('lblBuyDown').innerText = formatCurrency(buyDown);
+                    document.getElementById('lblBuyLoanTotal').innerText = formatCurrency(totalLoanPayments);
+                    document.getElementById('lblBuyResale').innerText = "-" + formatCurrency(buyResale);
+                    document.getElementById('lblBuyNet').innerText = formatCurrency(netBuyCost);
+
+                    document.getElementById('lblLeaseUpfront').innerText = formatCurrency(leaseUpfront);
+                    document.getElementById('lblLeaseTotalPayments').innerText = formatCurrency(totalLeasePayments);
+                    document.getElementById('lblLeaseBuyout').innerText = formatCurrency(leaseBuyout);
+                    document.getElementById('lblLeaseNet').innerText = formatCurrency(netLeaseCost);
+
+                    const banner = document.getElementById('verdictText');
+                    if (netBuyCost < netLeaseCost) {
+                        const savings = netLeaseCost - netBuyCost;
+                        banner.innerText = `🟢 Buying is more cost-effective! Saves ${formatCurrency(savings)} over leasing.`;
+                        banner.classList.remove('lease-better');
+                    } else {
+                        const savings = netBuyCost - netLeaseCost;
+                        banner.innerText = `🟣 Leasing is more cost-effective! Saves ${formatCurrency(savings)} over buying.`;
+                        banner.classList.add('lease-better');
+                    }
+
+                    document.getElementById('resultsPanel').classList.add('visible');
+                }
+
+                function formatCurrency(amount) {
+                    return new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                    }).format(amount);
+                }
+            </script>
+
+
+            <!-- ROTH VS TRADITIONAL -->
             <div class="calculator-card">
+                <h2>Roth vs. Traditional Calculator</h2>
+                
+                <div class="grid">
+                    <div>
+                        <div class="form-group">
+                            <label for="currentAge">Current Age</label>
+                            <input type="number" id="currentAge" value="30">
+                        </div>
+                        <div class="form-group">
+                            <label for="retireAge">Retirement Age</label>
+                            <input type="number" id="retireAge" value="65">
+                        </div>
+                        <div class="form-group">
+                            <label for="annualContrib">Annual Contribution ($)</label>
+                            <input type="number" id="annualContrib" value="6500">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="returnRate">Expected Annual Return (%)</label>
+                            <input type="number" step="0.1" id="returnRate" value="7.0">
+                        </div>
+                        <div class="form-group">
+                            <label for="currentTax">Current Tax Rate (%)</label>
+                            <input type="number" step="0.1" id="currentTax" value="22">
+                        </div>
+                        <div class="form-group">
+                            <label for="retireTax">Retirement Tax Rate (%)</label>
+                            <input type="number" step="0.1" id="retireTax" value="15">
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="calculate()">Calculate</button>
+
+                <div class="results" id="resultsSection" style="display:none;">
+                    <h3>Projected After-Tax Value at Age <span id="outAge"></span></h3>
+                    
+                    <div class="result-card">
+                        <h3>Traditional (Pre-Tax) Account Value (After Retirement Taxes)</h3>
+                        <div class="value" id="tradValue" style="color: #059669; font-size: 0.8rem;">$0</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h3>Roth (After-Tax) Account Value (Tax-Free Withdrawals)</h3>
+                        <div class="value" id="rothValue" style="color: #059669; font-size: 0.8rem;">$0</div>
+                    </div>
+                </div>
+                <div class="disclaimer">
+                <strong>CPA Note:</strong> This calculation outlines basic assumptions. It does not factor in specific tax brackets, contribution limits, or other retirement account rules. Consult a qualified CPA for personalized advice.
+            </div>
             </div>
 
-                <script>
-        function calculateBuyVsLease() {
-            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
-            const termMonths = parseInt(document.getElementById('termMonths').value) || 0;
+            <!-- SELF EMPLOYMENT TAX CALCULATOR -->           
+            <div class="calculator-card">
+                <h2>Self-Employment Tax Calculator</h2>
+                <p class="subtitle">Quickly estimate your Social Security and Medicare tax obligations.</p>
+                
+                <div class="form-group">
+                    <label for="netIncome">Estimated Net Annual Business Profit</label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="netIncome" placeholder="e.g. 50000" min="0" required>
+                    </div>
+                </div>
+
+                <button onclick="calculateTax()">Calculate Estimated Tax</button>
+
+                <div class="results" id="taxResults">
+                    <div class="result-row">
+                        <span>Taxable Net Earnings (92.35%):</span>
+                        <span id="taxableEarnings">$0.00</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Social Security Tax (12.4%):</span>
+                        <span id="socialSecurityTax">$0.00</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Medicare Tax (2.9%):</span>
+                        <span id="medicareTax">$0.00</span>
+                    </div>
+                    <div class="result-row total">
+                        <span>Total Self-Employment Tax:</span>
+                        <span id="totalTax">$0.00</span>
+                    </div>
+                    <div class="result-row" style="margin-top: 12px; font-size: 13px;">
+                        <span>Above-the-Line Income Deduction:</span>
+                        <span id="deductionAmount" style="color: #059669; font-weight: 600;">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="disclaimer">
+                    <strong>Disclaimer:</strong> This tool provides an estimate for educational purposes only. It does not account for local taxes, income tax brackets, or phase-outs. Consult a qualified CPA for official tax advice.
+                </div>
+            </div>
+            <script>
+            function calculate() {
+                const currentAge = parseInt(document.getElementById('currentAge').value);
+                const retireAge = parseInt(document.getElementById('retireAge').value);
+                const annualContrib = parseFloat(document.getElementById('annualContrib').value);
+                const returnRate = parseFloat(document.getElementById('returnRate').value) / 100;
+                const currentTax = parseFloat(document.getElementById('currentTax').value) / 100;
+                const retireTax = parseFloat(document.getElementById('retireTax').value) / 100;
+
+                const years = retireAge - currentAge;
+                if (years <= 0 || isNaN(years)) {
+                    alert("Retirement age must be greater than current age.");
+                    return;
+                }
+
+                // Future Value factor for regular contributions (End of year assumption)
+                // FV = P * (((1 + r)^n - 1) / r)
+                let fvMultiplier = returnRate === 0 ? years : (Math.pow(1 + returnRate, years) - 1) / returnRate;
+
+                // Traditional: Contributions are pre-tax, so full nominal amount is invested
+                const tradGross = annualContrib * fvMultiplier;
+                // Withdrawals from Traditional are fully taxed in retirement
+                const tradNet = tradGross * (1 - retireTax);
+
+                // Roth: Contributions are made with after-tax money. 
+                // Assuming user sets aside same gross paycheck deduction ($annualContrib nominal cash reduction equivalent).
+                // Traditional lets you invest `annualContrib`. Roth invest `annualContrib * (1 - currentTax)` if comparing exact same gross salary reduction,
+                // OR if comparing same out-of-pocket savings budget, Roth invests `annualContrib`, while Traditional out of pocket is less. 
+                // Standard model: Input is the amount entering the account directly (nominal dollar contribution equal).
+                const rothNet = (annualContrib * (1 - currentTax)) * fvMultiplier; 
+                // Wait, let's keep it simple: Compare equal contribution dollar amounts or equal pre-tax paycheck allocation.
+                // Let's assume standard input is the literal dollar amount deposited into the account:
+                // Roth balance grows tax-free.
+                const rothDirect = annualContrib * fvMultiplier; 
+
+                document.getElementById('outAge').innerText = retireAge;
+                document.getElementById('tradValue').innerText = '$' + Math.round(tradNet).toLocaleString();
+                document.getElementById('rothValue').innerText = '$' + Math.round(rothDirect).toLocaleString();
+                document.getElementById('resultsSection').style.display = 'block';
+            }
+            </script>
+
+
+<!-- Retirement Savings Planner     -->
+            <div class="calculator-card">
+                <div class="header">
+                    <h2>Retirement Savings Planner</h2>
+                    <p style ="font-size: 14px;">Analyze your savings trajectory and estimate your future financial security.</p>
+                </div>
+                
+                <div class="grid">
+                    <!-- Timeline & Target -->
+                    <div>
+                        <div class="section-title">Timeline & Target</div>
+                        <div class="input-group">
+                            <label for="currentAge">Current Age</label>
+                            <input type="number" id="currentAge" value="30" min="18" max="100">
+                        </div>
+                        <div class="input-group">
+                            <label for="retireAge">Target Retirement Age</label>
+                            <input type="number" id="retireAge" value="65" min="18" max="100">
+                        </div>
+                        <div class="input-group">
+                            <label for="targetIncome">Desired Monthly Income in Retirement</label>
+                            <div class="input-wrapper">
+                                <span class="prefix">$</span>
+                                <input type="number" id="targetIncome" class="has-prefix" value="5000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Savings & Assets -->
+                    <div>
+                        <div class="section-title">Savings & Market Assumptions</div>
+                        <div class="input-group">
+                            <label for="currentSavings">Current Retirement Nest Egg</label>
+                            <div class="input-wrapper">
+                                <span class="prefix">$</span>
+                                <input type="number" id="currentSavings" class="has-prefix" value="50000">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="monthlyContrib">Monthly Savings Contribution</label>
+                            <div class="input-wrapper">
+                                <span class="prefix">$</span>
+                                <input type="number" id="monthlyContrib" class="has-prefix" value="500">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="roi">Expected Annual Return (Inflation-Adjusted)</label>
+                            <div class="input-wrapper">
+                                <input type="number" step="0.1" id="roi" class="has-suffix" value="6.0">
+                                <span class="suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="generatePlan()">Generate Retirement Plan</button>
+
+                    <!-- Output Dashboard -->
+                    <div class="dashboard" id="dashboard">
+                        <div class="section-title">Your Retirement Outlook</div>
+                        
+                        <div id="statusMessage" class="status-box" style="font-size: 0.85rem;"></div>
+
+
+                        <div class="metrics">
+                            <div class="result-card">
+                                <h3>Projected Nest Egg</h3>
+                                <div class="metric-value" style="color: #059669; font-size: 0.8rem;" id="nestEgg">$0</div>
+                            </div>
+                            <div class="result-card">
+                                <h3>Estimated Monthly Income</h3>
+                                <div class="metric-value" id="monthlyIncome" style="color: #059669; font-size: 0.8rem;"">$0</div>
+                            </div>
+                            <div class="result-card">
+                                <h3>Target Monthly Income</h3>
+                                <div class="metric-value" id="monthlyTarget" style="color: #059669; font-size: 0.8rem;"">$0</div>
+                            </div>
+                        </div>
+                        <div class="disclaimer">
+                            <strong>Disclaimer:</strong> This tool provides an estimate for educational purposes only. It assumes a 4% safe withdrawal rate. It does not account for local taxes, income tax brackets, or phase-outs. Consult a qualified CPA for official tax advice.
+                        </div>
+                    </div>
+                </div>
+            </div>  
+    
+            <script>
+
+                function generatePlan() {
+                // Inputs
+                const currentAge = parseInt(document.getElementById('currentAge').value);
+                const retireAge = parseInt(document.getElementById('retireAge').value);
+                const targetIncome = parseFloat(document.getElementById('targetIncome').value);
+                const currentSavings = parseFloat(document.getElementById('currentSavings').value);
+                const monthlyContrib = parseFloat(document.getElementById('monthlyContrib').value);
+                const annualRoi = parseFloat(document.getElementById('roi').value) / 100;
+
+                const yearsToRetire = retireAge - currentAge;
+                
+                if (yearsToRetire <= 0 || isNaN(yearsToRetire)) {
+                    alert("Retirement age must be greater than your current age.");
+                    return;
+                }
+
+                const monthlyRoi = annualRoi / 12 /100; // Convert annual ROI to monthly decimal
+                const months = yearsToRetire * 12;
+
+                // Future value of current savings
+                // FV = PV * (1 + r)^n
+                const fvCurrent = currentSavings * Math.pow(1 + monthlyRoi, months);
+
+                // Future value of monthly contributions
+                // FV = PMT * [((1 + r)^n - 1) / r]
+                let fvContributions = 0;
+                if (monthlyRoi > 0) {
+                    fvContributions = monthlyContrib * ((Math.pow(1 + monthlyRoi, months) - 1) / monthlyRoi);
+                } else {
+                    fvContributions = monthlyContrib * months;
+                }
+
+                const totalNestEgg = fvCurrent + fvContributions;
+
+                // Sustainable Safe Withdrawal Rate (Using a standard 4% annual rule, or 4% / 12 months)
+                const swrAnnualRate = 0.04;
+                const estimatedMonthlyIncome = (totalNestEgg * swrAnnualRate) / 12;
+                
+                // Gap Analysis
+                const gap = targetIncome - estimatedMonthlyIncome;
+                const statusMessage = document.getElementById('statusMessage');
+                
+                if (gap > 0) {
+                    statusMessage.className = "status-box status-gap";
+                    statusMessage.innerText = `⚠️ You may fall short of your target by ${formatCurrency(gap)} per month. Consider increasing contributions or adjusting your retirement age.`;
+                } else {
+                    statusMessage.className = "status-box status-success";
+                    statusMessage.innerText = `✅ You are on track to meet or exceed your target retirement income! by ${formatCurrency(Math.abs(gap))}/month.`;
+                }
+            // 9. Format outcomes and push final calculations back to UI display nodes
+            document.getElementById('nestEgg').innerText = '$' + Math.round(totalNestEgg).toLocaleString();
+            document.getElementById('monthlyIncome').innerText = '$' + Math.round(estimatedMonthlyIncome).toLocaleString();
+            document.getElementById('monthlyTarget').innerText = '$' + Math.round(targetIncome).toLocaleString();
             
-            const buyDown = parseFloat(document.getElementById('buyDownPayment').value) || 0;
-            const buyInterest = parseFloat(document.getElementById('buyInterestRate').value) || 0;
-            const buyResale = parseFloat(document.getElementById('buyResaleValue').value) || 0;
-
-            const leaseUpfront = parseFloat(document.getElementById('leaseUpfront').value) || 0;
-            const leaseMonthly = parseFloat(document.getElementById('leaseMonthly').value) || 0;
-            const leaseBuyout = parseFloat(document.getElementById('leaseBuyout').value) || 0;
-
-            // --- BUY SIDE CALCULATION ---
-            const loanPrincipal = purchasePrice - buyDown;
-            let totalLoanPayments = 0;
-
-            if (loanPrincipal > 0 && buyInterest > 0 && termMonths > 0) {
-                const monthlyRate = (buyInterest / 100) / 12;
-                const monthlyPayment = (loanPrincipal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termMonths));
-                totalLoanPayments = monthlyPayment * termMonths;
-            } else {
-                totalLoanPayments = loanPrincipal;
+            // 10. Switch the CSS visibility state of the dashboard to visible
+            document.getElementById('dashboard').style.display = 'block';
+        
             }
-
-            const netBuyCost = buyDown + totalLoanPayments - buyResale;
-
-            // --- LEASE SIDE CALCULATION ---
-            const totalLeasePayments = leaseMonthly * termMonths;
-            const netLeaseCost = leaseUpfront + totalLeasePayments + leaseBuyout;
-
-            // --- UPDATE DOM ---
-            document.getElementById('lblBuyDown').innerText = formatCurrency(buyDown);
-            document.getElementById('lblBuyLoanTotal').innerText = formatCurrency(totalLoanPayments);
-            document.getElementById('lblBuyResale').innerText = "-" + formatCurrency(buyResale);
-            document.getElementById('lblBuyNet').innerText = formatCurrency(netBuyCost);
-
-            document.getElementById('lblLeaseUpfront').innerText = formatCurrency(leaseUpfront);
-            document.getElementById('lblLeaseTotalPayments').innerText = formatCurrency(totalLeasePayments);
-            document.getElementById('lblLeaseBuyout').innerText = formatCurrency(leaseBuyout);
-            document.getElementById('lblLeaseNet').innerText = formatCurrency(netLeaseCost);
-
-            const banner = document.getElementById('verdictText');
-            if (netBuyCost < netLeaseCost) {
-                const savings = netLeaseCost - netBuyCost;
-                banner.innerText = `🟢 Buying is more cost-effective! Saves ${formatCurrency(savings)} over leasing.`;
-                banner.classList.remove('lease-better');
-            } else {
-                const savings = netBuyCost - netLeaseCost;
-                banner.innerText = `🟣 Leasing is more cost-effective! Saves ${formatCurrency(savings)} over buying.`;
-                banner.classList.add('lease-better');
-            }
-
-            document.getElementById('resultsPanel').classList.add('visible');
-        }
-
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD'
-            }).format(amount);
-        }
-    </script>
-
-
+            </script>
         </div>
     </main>
+
+
+
     <footer class="footer">
       <div class="container footer-content">
         <div class="footer-links">
