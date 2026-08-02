@@ -536,3 +536,10 @@ form button {
     padding-bottom: 2.5rem;
   }
 }
+
+a.my-link {
+            text-decoration: underline dotted; /* optional: removes default underline */
+        }
+a.my-link:hover {
+            text-decoration: underline; /* adds underline on hover */
+        }
