@@ -125,6 +125,11 @@ h1 {
   color: var(--navy);
 }
 
+.btn-navy {
+  background: var(--navy);
+  color: white;
+}
+
 .btn-secondary {
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
@@ -332,7 +337,7 @@ h1 {
 .detail-card h3 {
   margin: 0 0 0.5rem;
   color: var(--navy);
-  font-size: 1.05rem;
+    /*font-size: 1.0rem;*/
 }
 
 .detail-card p {
