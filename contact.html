@@ -77,62 +77,21 @@
 
         <section class="contact-details-card">
           <h2>Send us a message</h2>
-          <p>Fill out the details below and we’ll email them to the team.</p>
-          <p id="formStatus" role="status" aria-live="polite"></p>
-          <form id="contactForm" action="https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYED_WEB_APP_URL/exec" method="post">
-            <label>
-              Name
-              <input type="text" name="name" required />
-            </label>
-            <label>
-              Phone number / Email
-              <input type="text" name="contact" required />
-            </label>
-            <label>
-              Message
-              <textarea name="message" rows="6" required></textarea>
-            </label>
-            <button class="btn btn-navy" type="submit">Send Message</button>
-          </form>
+          <p>Fill out the details below and we’ll be in touch.</p>
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLScr5sbRIZ1iZCBao-qpmy5zEsKHcYtnfiqJ90VSr0Jt3F0ZJA/viewform?embedded=true"
+            title="Send us a message"
+            width="640"
+            height="826"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            loading="lazy"
+            style="width: 100%; max-width: 640px; border: 0;"
+          >Loading…</iframe>
         </section>
       </div>
     </main>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('contactForm');
-        const status = document.getElementById('formStatus');
-        if (!form || !status) return;
-
-        form.addEventListener('submit', function (event) {
-          event.preventDefault();
-
-          const endpoint = form.getAttribute('action');
-          if (endpoint.includes('REPLACE_WITH_YOUR_DEPLOYED_WEB_APP_URL')) {
-            status.textContent = 'The contact form is not connected yet. Replace the placeholder Apps Script URL with your deployed web app URL.';
-            return;
-          }
-
-          const data = new FormData(form);
-          status.textContent = 'Sending...';
-
-          fetch(endpoint, {
-            method: form.method,
-            body: data
-          })
-            .then(function (response) {
-              if (!response.ok) {
-                throw new Error('Submission failed');
-              }
-              status.textContent = 'Thanks! Your message has been sent.';
-              form.reset();
-            })
-            .catch(function () {
-              status.textContent = 'There was a problem sending your message. Please verify the Apps Script web app URL and deployment permissions.';
-            });
-        });
-      });
-    </script>
 
     <footer class="footer">
       <div class="container footer-content">
