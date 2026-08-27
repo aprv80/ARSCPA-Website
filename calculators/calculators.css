@@ -7,6 +7,7 @@
             --border: #e2e8f0;
             --text-main: #334155;
             --success: #16a34a;
+            --text-light: #64748b;
         }
 h2 {
     color: var(--primary);
@@ -17,7 +18,7 @@ h2 {
 
 p.desc {
     font-size: 14px;
-    color: #64748b;
+    color: var(--text-light);
     margin: 0 0 24px 0;
 }
 

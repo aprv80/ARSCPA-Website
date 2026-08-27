@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculators | Shikha Gupta CPA LLC</title>
+    <title>Financial Calculators | Shikha Gupta CPA LLC</title>
     <meta name="description" content="Calculate your self-employment taxes with our easy-to-use estimator." />
     <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="calculators.css" />
@@ -443,18 +443,18 @@
                     <div>
                         <div class="section-title">Timeline & Target</div>
                         <div class="input-group">
-                            <label for="currentAge">Current Age</label>
-                            <input type="number" id="currentAge" value="30" min="18" max="100">
+                            <label for="currentAge_rs">Current Age</label>
+                            <input type="number" id="currentAge_rs" value="30" min="18" max="100">
                         </div>
                         <div class="input-group">
-                            <label for="retireAge">Target Retirement Age</label>
-                            <input type="number" id="retireAge" value="65" min="18" max="100">
+                            <label for="retireAge_rs">Target Retirement Age</label>
+                            <input type="number" id="retireAge_rs" value="65" min="18" max="100">
                         </div>
                         <div class="input-group">
-                            <label for="targetIncome">Desired Monthly Income in Retirement</label>
+                            <label for="targetIncome_rs">Desired Monthly Income in Retirement</label>
                             <div class="input-wrapper">
                                 <span class="prefix">$</span>
-                                <input type="number" id="targetIncome" class="has-prefix" value="5000">
+                                <input type="number" id="targetIncome_rs" class="has-prefix" value="5000">
                             </div>
                         </div>
                     </div>
@@ -463,23 +463,23 @@
                     <div>
                         <div class="section-title">Savings & Market Assumptions</div>
                         <div class="input-group">
-                            <label for="currentSavings">Current Retirement Nest Egg</label>
+                            <label for="currentSavings_rs">Current Retirement Nest Egg</label>
                             <div class="input-wrapper">
                                 <span class="prefix">$</span>
-                                <input type="number" id="currentSavings" class="has-prefix" value="50000">
+                                <input type="number" id="currentSavings_rs" class="has-prefix" value="50000">
                             </div>
                         </div>
                         <div class="input-group">
-                            <label for="monthlyContrib">Monthly Savings Contribution</label>
+                            <label for="monthlyContrib_rs">Monthly Savings Contribution</label>
                             <div class="input-wrapper">
                                 <span class="prefix">$</span>
-                                <input type="number" id="monthlyContrib" class="has-prefix" value="500">
+                                <input type="number" id="monthlyContrib_rs" class="has-prefix" value="500">
                             </div>
                         </div>
                         <div class="input-group">
-                            <label for="roi">Expected Annual Return (Inflation-Adjusted)</label>
+                            <label for="roi_rs">Expected Annual Return (Inflation-Adjusted)</label>
                             <div class="input-wrapper">
-                                <input type="number" step="0.1" id="roi" class="has-suffix" value="6.0">
+                                <input type="number" step="0.1" id="roi_rs" class="has-suffix" value="6.0">
                                 <span class="suffix">%</span>
                             </div>
                         </div>
@@ -519,12 +519,12 @@
 
                 function generatePlan() {
                 // Inputs
-                const currentAge = parseInt(document.getElementById('currentAge').value);
-                const retireAge = parseInt(document.getElementById('retireAge').value);
-                const targetIncome = parseFloat(document.getElementById('targetIncome').value);
-                const currentSavings = parseFloat(document.getElementById('currentSavings').value);
-                const monthlyContrib = parseFloat(document.getElementById('monthlyContrib').value);
-                const annualRoi = parseFloat(document.getElementById('roi').value) / 100;
+                const currentAge = parseInt(document.getElementById('currentAge_rs').value);
+                const retireAge = parseInt(document.getElementById('retireAge_rs').value);
+                const targetIncome = parseFloat(document.getElementById('targetIncome_rs').value);
+                const currentSavings = parseFloat(document.getElementById('currentSavings_rs').value);
+                const monthlyContrib = parseFloat(document.getElementById('monthlyContrib_rs').value);
+                const annualRoi = parseFloat(document.getElementById('roi_rs').value) / 100;
 
                 const yearsToRetire = retireAge - currentAge;
                 
@@ -533,7 +533,7 @@
                     return;
                 }
 
-                const monthlyRoi = annualRoi / 12 /100; // Convert annual ROI to monthly decimal
+                const monthlyRoi = annualRoi / 12 ; // Convert annual ROI to monthly decimal
                 const months = yearsToRetire * 12;
 
                 // Future value of current savings
@@ -581,18 +581,6 @@
 
 
 
-    <footer class="footer">
-      <div class="container footer-content">
-        <div class="footer-links">
-          <a href="privacy-policy.html">Privacy Policy</a>
-          <a href="terms-conditions.html">Terms &amp; Conditions</a>
-          <a href="refund-cancellations.html">Refund / Cancellations</a>
-        </div>
-        <div class="footer-logos" aria-label="Partner and certification logos">
-          <img src="Footer%20Images/CPA%20logo%20250%20copy.jpg" alt="CPA logo" class="footer-logo">
-          <img src="Footer%20Images/IRS%20efile%20image.png" alt="IRS e-file image" class="footer-logo">
-        </div>
-        <p>© 2026 ARS Advisory Group. All rights reserved.</p>
-      </div>
-    </footer>
+        <iframe src="../footer.html" title="Site footer" class="footer-frame"></iframe>
 </body>
+</html>
