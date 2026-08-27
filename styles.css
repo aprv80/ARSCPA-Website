@@ -278,6 +278,13 @@ h1 {
   object-fit: contain;
 }
 
+.footer-frame {
+  display: block;
+  width: 100%;
+  height: 130px;
+  border: 0;
+}
+
 .page-header {
   background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
   color: white;
