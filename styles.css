@@ -323,8 +323,12 @@ h1 {
   color: var(--navy);
 }
 
-.service-card p {
+.service-card p,
+.service-card ul,
+.service-card ol,
+.service-card li {
   color: var(--muted);
+  font: inherit;
 }
 
 .service-detail-grid {
