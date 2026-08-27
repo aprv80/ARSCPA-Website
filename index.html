@@ -54,15 +54,15 @@
     <main>
       <section class="stats container" aria-label="Key business highlights">
         <article>
-          <strong>15+</strong>
+          <strong id="experience-count">1+</strong>
           <span>Years of advisory experience</span>
         </article>
         <article>
-          <strong>1,200+</strong>
+          <strong id="client-count">1+</strong>
           <span>Clients served across industries</span>
         </article>
         <article>
-          <strong>100%</strong>
+          <strong id="commitment-count">1%</strong>
           <span>Committed to proactive planning</span>
         </article>
       </section>
@@ -131,5 +131,42 @@
     </main>
 
     <iframe src="footer.html" title="Site footer" class="footer-frame"></iframe>
+
+    <script>
+      const counters = [
+        { element: document.getElementById("experience-count"), target: 15, suffix: "+" },
+        { element: document.getElementById("client-count"), target: 1200, suffix: "+" },
+        { element: document.getElementById("commitment-count"), target: 100, suffix: "%" }
+      ];
+      const animationDuration = 1800;
+
+      function animateCounter(counter) {
+        return new Promise((resolve) => {
+          const animationStart = performance.now();
+
+          function updateCounter(currentTime) {
+            const progress = Math.min((currentTime - animationStart) / animationDuration, 1);
+            const currentCount = Math.max(1, Math.floor(progress * counter.target));
+            counter.element.textContent = `${currentCount.toLocaleString()}${counter.suffix}`;
+
+            if (progress < 1) {
+              requestAnimationFrame(updateCounter);
+            } else {
+              resolve();
+            }
+          }
+
+          requestAnimationFrame(updateCounter);
+        });
+      }
+
+      async function animateCountersSequentially() {
+        for (const counter of counters) {
+          await animateCounter(counter);
+        }
+      }
+
+      animateCountersSequentially();
+    </script>
   </body>
 </html>
