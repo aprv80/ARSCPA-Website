@@ -519,7 +519,8 @@ form button {
   .about-grid,
   .card-grid,
   .stats,
-  .service-grid {
+  .service-grid,
+  .contact-page-grid {
     grid-template-columns: 1fr;
   }
 
@@ -550,6 +551,11 @@ form button {
 
   .hero {
     padding-bottom: 2.5rem;
+  }
+
+  .contact-card,
+  .contact-details-card {
+    padding: 1rem;
   }
 }
 
