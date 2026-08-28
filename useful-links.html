@@ -9,6 +9,7 @@
       content="Useful links for SBA, IRS, and Social Security resources."
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="site.js" defer></script>
   </head>
   <body>
     <header class="page-header">
@@ -36,27 +37,9 @@
     </header>
 
     <main class="section container">
-        <style>
-            a.my-link {
-                text-decoration: none; /* optional: removes default underline */
-            }
-            a.my-link:hover {
-                text-decoration: underline; /* adds underline on hover */
-            }
-        </style>
       <div class="login-card">
         <h2>Helpful government and business resources</h2>
         <ul class="resource-list">
-          <!--<li>
-            <a href="https://www.google.com/url?q=https%3A%2F%2Fwww.sba.gov%2Fsites%2Fdefault%2Ffiles%2F2021-01%2FTop-line%2520Overview%2520of%2520Second%2520Draw%2520PPP%2520%25281.8.2021%2529-508.pdf&sa=D&sntz=1&usg=AOvVaw24CAcflRn9Cy41sDRc7EO4" target="_blank" rel="noopener noreferrer" class="my-link">
-              SBA link to see information on second PPP Loan
-            </a>
-          </li>
-          <li>
-            <a href="https://www.google.com/url?q=https%3A%2F%2Fwww.sba.gov%2Ffunding-programs%2Floans%2Fcoronavirus-relief-options%2Fpaycheck-protection-program%2Fsecond-draw-ppp-loans&sa=D&sntz=1&usg=AOvVaw3JLKWYjr3SHNIeoonn29wU" target="_blank" rel="noopener noreferrer" class="my-link">
-              SBA link for information on PPP Second Draw
-            </a>
-          </li>!-->
           <li>
             <a href="https://www.irs.gov" target="_blank" rel="noopener noreferrer" class="my-link">
               Internal Revenue Service
@@ -84,6 +67,6 @@
       </div>
     </main>
 
-    <iframe src="footer.html" title="Site footer" class="footer-frame"></iframe>
+    <div data-site-footer></div>
   </body>
 </html>
