@@ -9,6 +9,7 @@
       content="Access the secure client portal for documents, uploads, and secure communications."
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="site.js" defer></script>
   </head>
   <body>
     <header class="page-header">
@@ -21,7 +22,7 @@
           <a href="index.html#services">Services</a>
           <a href="client-login.html" aria-current="page">Client Login</a>
           <a href="useful-links.html">Useful Links</a>
-          <a href="index.html#about">About</a>
+          <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
         </div>
       </nav>
@@ -63,7 +64,7 @@
     </main>
 
     <div class="modal-backdrop" id="portalModal" aria-hidden="true">
-      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="portalModalTitle">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="portalModalTitle" tabindex="-1">
         <h3 id="portalModalTitle">You are leaving this site</h3>
         <p>
           You are about to open an external secure portal for client access. Continue
@@ -82,23 +83,29 @@
       const portalModal = document.getElementById('portalModal');
       const cancelPortalBtn = document.getElementById('cancelPortalBtn');
       const confirmPortalBtn = document.getElementById('confirmPortalBtn');
+      const modalCard = portalModal.querySelector('.modal-card');
+      let previouslyFocusedElement = null;
 
-      function closeModal() {
+      function closeModal({ returnFocus = true } = {}) {
         portalModal.classList.remove('is-open');
         portalModal.setAttribute('aria-hidden', 'true');
+        if (returnFocus && previouslyFocusedElement) {
+          previouslyFocusedElement.focus();
+        }
       }
 
       function openModal() {
+        previouslyFocusedElement = document.activeElement;
         portalModal.classList.add('is-open');
         portalModal.setAttribute('aria-hidden', 'false');
+        cancelPortalBtn.focus();
       }
 
       openPortalBtn.addEventListener('click', openModal);
       cancelPortalBtn.addEventListener('click', closeModal);
       confirmPortalBtn.addEventListener('click', function () {
         closeModal();
-        /*window.location.href = portalUrl;*/
-        window.open(portalUrl, '_blank');
+        window.open(portalUrl, '_blank', 'noopener,noreferrer');
       });
 
       portalModal.addEventListener('click', function (event) {
@@ -108,13 +115,31 @@
       });
 
       document.addEventListener('keydown', function (event) {
+        if (!portalModal.classList.contains('is-open')) return;
+
         if (event.key === 'Escape') {
           closeModal();
+        }
+
+        if (event.key === 'Tab') {
+          const focusableElements = Array.from(
+            modalCard.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+          ).filter((element) => !element.disabled);
+          const firstElement = focusableElements[0];
+          const lastElement = focusableElements[focusableElements.length - 1];
+
+          if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+          } else if (!event.shiftKey && document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+          }
         }
       });
     </script>
 
-      <iframe src="footer.html" title="Site footer" class="footer-frame"></iframe>
+      <div data-site-footer></div>
 </body>
 
 </html>
