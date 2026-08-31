@@ -6,9 +6,18 @@
     <title>About Us | Shikha Gupta CPA LLC</title>
     <meta
       name="description"
-      content="Explore our accounting, payroll, tax, and business formation services."
+      content="Learn about our Katy CPA firm and our accounting, bookkeeping, payroll, tax, advisory, and business formation services."
     />
+    <link rel="canonical" href="https://www.arscpa.com/about.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="About Our Katy CPA Firm | Shikha Gupta CPA LLC" />
+    <meta property="og:description" content="Learn how our Katy CPA firm supports individuals and businesses with accounting, bookkeeping, payroll, tax, and advisory services." />
+    <meta property="og:url" content="https://www.arscpa.com/about.html" />
+    <meta property="og:image" content="https://www.arscpa.com/Images/Company%20Logo%20copy.png" />
+    <meta property="og:site_name" content="Shikha Gupta CPA LLC" />
+    <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="site.js" defer></script>
   </head>
   <body>
     <header class="page-header">
@@ -21,7 +30,7 @@
           <a href="index.html#services">Services</a>
           <a href="client-login.html">Client Login</a>
           <a href="useful-links.html">Useful Links</a>
-          <a href="index.html#about">About</a>
+          <a href="about.html" aria-current="page">About</a>
           <a href="contact.html">Contact</a>
         </div>
       </nav>
@@ -37,14 +46,15 @@
 
     <main>
 
-      <section class="section container">
+      <section class="section container about-sections" aria-label="How our firm helps">
         
-        <div class="service-card"> 
-          <h2>What we provide</h2>
-          <!-- <p>We help small businesses maintain accurate records, prepare routine financial statements, and improve visibility into cash flow and performance.</p>
-          <p>Our service includes bookkeeping support, account reconciliations, reporting, and guidance that helps you make informed decisions with less stress.</p> -->
+        <article class="about-card">
+          <div class="about-card-heading">
+            <span class="about-card-number" aria-hidden="true">01</span>
+            <h2>What we provide</h2>
+          </div>
         <p>Complete accounting, tax, payroll, and business formation services for individuals, entrepreneurs, and growing businesses.</p>
-        <ul style= "column-count:2; column-gap: 2rem; color: var(--muted);">
+        <ul class="about-feature-list">
          <li>Small-business accounting and bookkeeping</li>
          <li>Bank and credit-card reconciliation</li>
          <li>Income statements and balance sheets</li>
@@ -59,14 +69,15 @@
          <li>Ongoing consultations and financial support</li>
         </ul>
         
-        </div>
+        </article>
 
-        <div class="service-card" style="background-color: var(--cream);">
-          <h2>Why it matters</h2>
-          <!-- <p>Accurate and timely financial information is essential for making informed business decisions, managing cash flow, and ensuring compliance with tax regulations.</p>
-          <p>With our small business accounting services, you can focus on growing your business while we handle the financial details.</p> -->
+        <article class="about-card about-card--accent">
+          <div class="about-card-heading">
+            <span class="about-card-number" aria-hidden="true">02</span>
+            <h2>Why it matters</h2>
+          </div>
         <p>When your finances are accurate, organized, and understood, you can spend less time worrying about compliance and more time building a profitable business.</p>
-        <ul style= "column-count:2; column-gap: 2rem; color: var(--muted);">
+        <ul class="about-feature-list">
          <li>Business owners save time by not having to manage their books alone.</li>
          <li>Accurate financial reports support better business decisions.</li>
          <li>Organized records help businesses prepare for tax filings and audits.</li>
@@ -77,16 +88,17 @@
          <li>Remote service makes professional support available beyond the local area.</li>
          <li>Proper incorporation support helps international clients establish businesses legally in the United States.</li>
         </ul>
-        </div>
+        </article>
 
 
 
-        <div class="service-card">
-          <h2>How we work</h2>
-          <!-- <p>We work closely with you to understand your business needs and tailor our services accordingly. Our team uses modern accounting software to streamline processes and provide you with clear, actionable insights.</p>
-          <p>Whether you need monthly bookkeeping, quarterly reporting, or annual financial statements, we provide flexible solutions that fit your business model and budget.</p> -->
+        <article class="about-card">
+          <div class="about-card-heading">
+            <span class="about-card-number" aria-hidden="true">03</span>
+            <h2>How we work</h2>
+          </div>
           <p>We take the time to understand your situation, build the right service plan, and provide clear, timely support throughout the year.</p>
-          <ul style= "column-count:2; column-gap: 2rem; color: var(--muted);">
+          <ul class="about-feature-list">
             <li>We begin by understanding each client’s business, goals, and financial situation.</li>
             <li>We tailor the chart of accounts and service plan to the client’s needs.</li>
             <li>We offer monthly or quarterly support, depending on the business.</li>
@@ -96,11 +108,11 @@
             <li>We explain the numbers clearly and remain available for ongoing consultations.</li>
             <li>We offer a free 15-minute consultation to discuss the client’s needs.</li>
           </ul>
-        </div>
+        </article>
       </section>
     </main>
 
       
-    <iframe src="footer.html" title="Site footer" class="footer-frame"></iframe>
+    <div data-site-footer></div>
   </body>
 </html>

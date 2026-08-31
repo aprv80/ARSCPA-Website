@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const refundsUrl = new URL('refund-cancellations.html', siteScriptUrl).href;
     const cpaLogoUrl = new URL('Footer%20Images/CPA%20logo%20250%20copy.jpg', siteScriptUrl).href;
     const efileLogoUrl = new URL('Footer%20Images/IRS%20efile%20image.png', siteScriptUrl).href;
+    const quickbooksLogoUrl = new URL('Footer%20images/QuickBooks-Certified-ProAdvisor-Logo.jpg', siteScriptUrl).href;
 
     footerHost.innerHTML = `
       <footer class="footer">
@@ -57,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="footer-logos" aria-label="Professional certification logos">
             <img src="${cpaLogoUrl}" alt="CPA logo" class="footer-logo">
             <img src="${efileLogoUrl}" alt="IRS e-file logo" class="footer-logo">
+            <img src="${quickbooksLogoUrl}" alt="QuickBooks Certified ProAdvisor Logo" class="footer-logo">
           </div>
           <p>© 2026 Shikha Gupta CPA LLC. All rights reserved.</p>
         </div>
