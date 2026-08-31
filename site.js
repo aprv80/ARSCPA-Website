@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const refundsUrl = new URL('refund-cancellations.html', siteScriptUrl).href;
     const cpaLogoUrl = new URL('Footer%20Images/CPA%20logo%20250%20copy.jpg', siteScriptUrl).href;
     const efileLogoUrl = new URL('Footer%20Images/IRS%20efile%20image.png', siteScriptUrl).href;
-    const quickbooksLogoUrl = new URL('Footer%20images/QuickBooks-Certified-ProAdvisor-Logo.jpg', siteScriptUrl).href;
+    const quickbooksLogoUrl = new URL('Footer%20Images/QuickBooks-Certified-ProAdvisor-Logo.jpg', siteScriptUrl).href;
 
     footerHost.innerHTML = `
       <footer class="footer">
