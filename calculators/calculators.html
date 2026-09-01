@@ -459,7 +459,7 @@
                             <label for="targetIncome_rs">Desired Monthly Income in Retirement</label>
                             <div class="input-wrapper">
                                 <span class="prefix">$</span>
-                                <input type="number" id="targetIncome_rs" class="has-prefix" value="5000">
+                                <input type="number" id="targetIncome_rs" class="has-prefix" value="5000" min="0" step="0.01">
                             </div>
                         </div>
                     </div>
@@ -471,20 +471,20 @@
                             <label for="currentSavings_rs">Current Retirement Nest Egg</label>
                             <div class="input-wrapper">
                                 <span class="prefix">$</span>
-                                <input type="number" id="currentSavings_rs" class="has-prefix" value="50000">
+                                <input type="number" id="currentSavings_rs" class="has-prefix" value="50000" min="0" step="0.01">
                             </div>
                         </div>
                         <div class="input-group">
                             <label for="monthlyContrib_rs">Monthly Savings Contribution</label>
                             <div class="input-wrapper">
                                 <span class="prefix">$</span>
-                                <input type="number" id="monthlyContrib_rs" class="has-prefix" value="500">
+                                <input type="number" id="monthlyContrib_rs" class="has-prefix" value="500" min="0" step="0.01">
                             </div>
                         </div>
                         <div class="input-group">
                             <label for="roi_rs">Expected Annual Return (Inflation-Adjusted)</label>
                             <div class="input-wrapper">
-                                <input type="number" step="0.1" id="roi_rs" class="has-suffix" value="6.0">
+                                <input type="number" step="0.1" id="roi_rs" class="has-suffix" value="6.0" min="-99.9">
                                 <span class="suffix">%</span>
                             </div>
                         </div>
@@ -532,9 +532,20 @@
                 const annualRoi = parseFloat(document.getElementById('roi_rs').value) / 100;
 
                 const yearsToRetire = retireAge - currentAge;
-                
-                if (yearsToRetire <= 0 || isNaN(yearsToRetire)) {
+
+                if (!Number.isFinite(currentAge) || !Number.isFinite(retireAge) || yearsToRetire <= 0) {
                     alert("Retirement age must be greater than your current age.");
+                    return;
+                }
+
+                const financialInputs = [targetIncome, currentSavings, monthlyContrib, annualRoi];
+                if (financialInputs.some((value) => !Number.isFinite(value))) {
+                    alert("Please enter a valid number in every retirement-planner field. Use numbers only, without commas or currency symbols.");
+                    return;
+                }
+
+                if (targetIncome < 0 || currentSavings < 0 || monthlyContrib < 0 || annualRoi <= -1) {
+                    alert("Income, savings, and contributions cannot be negative, and the annual return must be greater than -100%.");
                     return;
                 }
 
@@ -548,7 +559,7 @@
                 // Future value of monthly contributions
                 // FV = PMT * [((1 + r)^n - 1) / r]
                 let fvContributions = 0;
-                if (monthlyRoi > 0) {
+                if (monthlyRoi !== 0) {
                     fvContributions = monthlyContrib * ((Math.pow(1 + monthlyRoi, months) - 1) / monthlyRoi);
                 } else {
                     fvContributions = monthlyContrib * months;
