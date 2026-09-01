@@ -57,7 +57,7 @@
                     const netIncomeInput = document.getElementById('netIncome').value;
                     const netIncome = parseFloat(netIncomeInput);
 
-                    if (isNaN(netIncome) || netIncome <= 0) {
+                    if (!Number.isFinite(netIncome) || netIncome <= 0) {
                         alert('Please enter a valid profit amount.');
                         return;
                     }
@@ -148,7 +148,7 @@
                     <!-- Leasing Path Info -->
                     <div class="section-title">Leasing Parameters</div>
                     <div class="input-group">
-                        <label for="leaseUpfront">Upfront Fees / Security Deposit</label>
+                        <label for="leaseUpfront">Nonrefundable Upfront Lease Fees</label>
                         <div class="input-box has-prefix">
                             <span class="prefix">$</span>
                             <input type="number" id="leaseUpfront" value="1500" min="0" step="100">
@@ -223,22 +223,38 @@
                 </div>
 
                 <div class="disclaimer">
-                    <strong>CPA Note:</strong> This calculation outlines basic nominal cash layouts. It does not factor in corporate income tax brackets, Section 179 immediate depreciation deductions, or operating vs. capital lease structures.
+                    <strong>CPA Note:</strong> This calculation outlines basic nominal cash outlays. It does not factor in refundable security deposits, corporate income tax brackets, Section 179 immediate depreciation deductions, or operating vs. capital lease structures.
                 </div>
             </section>
 
             <script>
                 function calculateBuyVsLease() {
-                    const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
-                    const termMonths = parseInt(document.getElementById('termMonths').value) || 0;
+                    const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+                    const termMonths = parseInt(document.getElementById('termMonths').value);
                     
-                    const buyDown = parseFloat(document.getElementById('buyDownPayment').value) || 0;
-                    const buyInterest = parseFloat(document.getElementById('buyInterestRate').value) || 0;
-                    const buyResale = parseFloat(document.getElementById('buyResaleValue').value) || 0;
+                    const buyDown = parseFloat(document.getElementById('buyDownPayment').value);
+                    const buyInterest = parseFloat(document.getElementById('buyInterestRate').value);
+                    const buyResale = parseFloat(document.getElementById('buyResaleValue').value);
 
-                    const leaseUpfront = parseFloat(document.getElementById('leaseUpfront').value) || 0;
-                    const leaseMonthly = parseFloat(document.getElementById('leaseMonthly').value) || 0;
-                    const leaseBuyout = parseFloat(document.getElementById('leaseBuyout').value) || 0;
+                    const leaseUpfront = parseFloat(document.getElementById('leaseUpfront').value);
+                    const leaseMonthly = parseFloat(document.getElementById('leaseMonthly').value);
+                    const leaseBuyout = parseFloat(document.getElementById('leaseBuyout').value);
+
+                    const inputs = [purchasePrice, termMonths, buyDown, buyInterest, buyResale, leaseUpfront, leaseMonthly, leaseBuyout];
+                    if (inputs.some((value) => !Number.isFinite(value))) {
+                        alert("Please enter a valid number in every buy-versus-lease field.");
+                        return;
+                    }
+
+                    if (purchasePrice < 0 || termMonths <= 0 || buyDown < 0 || buyInterest < 0 || buyResale < 0 || leaseUpfront < 0 || leaseMonthly < 0 || leaseBuyout < 0) {
+                        alert("Costs and rates cannot be negative, and the comparison term must be at least one month.");
+                        return;
+                    }
+
+                    if (buyDown > purchasePrice) {
+                        alert("The down payment cannot exceed the equipment purchase price.");
+                        return;
+                    }
 
                     // --- BUY SIDE CALCULATION ---
                     const loanPrincipal = purchasePrice - buyDown;
@@ -274,10 +290,13 @@
                         const savings = netLeaseCost - netBuyCost;
                         banner.innerText = `🟢 Buying is more cost-effective! Saves ${formatCurrency(savings)} over leasing.`;
                         banner.classList.remove('lease-better');
-                    } else {
+                    } else if (netBuyCost > netLeaseCost) {
                         const savings = netBuyCost - netLeaseCost;
                         banner.innerText = `🟣 Leasing is more cost-effective! Saves ${formatCurrency(savings)} over buying.`;
                         banner.classList.add('lease-better');
+                    } else {
+                        banner.innerText = "Buying and leasing have the same estimated net cost.";
+                        banner.classList.remove('lease-better');
                     }
 
                     document.getElementById('resultsPanel').classList.add('visible');
@@ -309,7 +328,7 @@
                             <input type="number" id="retireAge" value="65" min="19" max="100">
                         </div>
                         <div class="form-group">
-                            <label for="annualContrib">Annual Contribution ($)</label>
+                            <label for="annualContrib">Annual Pre-Tax Savings Budget ($)</label>
                             <input type="number" id="annualContrib" value="6500" min="0" step="100">
                         </div>
                     </div>
@@ -402,8 +421,19 @@
                 const retireTax = parseFloat(document.getElementById('retireTax').value) / 100;
 
                 const years = retireAge - currentAge;
-                if (years <= 0 || isNaN(years)) {
+                const inputs = [currentAge, retireAge, annualContrib, returnRate, currentTax, retireTax];
+                if (inputs.some((value) => !Number.isFinite(value))) {
+                    alert("Please enter a valid number in every Roth-versus-Traditional field.");
+                    return;
+                }
+
+                if (years <= 0) {
                     alert("Retirement age must be greater than current age.");
+                    return;
+                }
+
+                if (annualContrib < 0 || returnRate < 0 || returnRate > 1 || currentTax < 0 || currentTax > 1 || retireTax < 0 || retireTax > 1) {
+                    alert("The contribution cannot be negative, and return and tax rates must be within the displayed ranges.");
                     return;
                 }
 
@@ -416,20 +446,13 @@
                 // Withdrawals from Traditional are fully taxed in retirement
                 const tradNet = tradGross * (1 - retireTax);
 
-                // Roth: Contributions are made with after-tax money. 
-                // Assuming user sets aside same gross paycheck deduction ($annualContrib nominal cash reduction equivalent).
-                // Traditional lets you invest `annualContrib`. Roth invest `annualContrib * (1 - currentTax)` if comparing exact same gross salary reduction,
-                // OR if comparing same out-of-pocket savings budget, Roth invests `annualContrib`, while Traditional out of pocket is less. 
-                // Standard model: Input is the amount entering the account directly (nominal dollar contribution equal).
-                const rothNet = (annualContrib * (1 - currentTax)) * fvMultiplier; 
-                // Wait, let's keep it simple: Compare equal contribution dollar amounts or equal pre-tax paycheck allocation.
-                // Let's assume standard input is the literal dollar amount deposited into the account:
-                // Roth balance grows tax-free.
-                const rothDirect = annualContrib * fvMultiplier; 
+                // Roth contributions are made after current-year taxes so both
+                // scenarios use the same pre-tax savings budget.
+                const rothNet = (annualContrib * (1 - currentTax)) * fvMultiplier;
 
                 document.getElementById('outAge').innerText = retireAge;
                 document.getElementById('tradValue').innerText = '$' + Math.round(tradNet).toLocaleString();
-                document.getElementById('rothValue').innerText = '$' + Math.round(rothDirect).toLocaleString();
+                document.getElementById('rothValue').innerText = '$' + Math.round(rothNet).toLocaleString();
                 document.getElementById('resultsSection').classList.add('active');
             }
             </script>
