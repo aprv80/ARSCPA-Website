@@ -64,4 +64,45 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </footer>`;
   }
+
+  const handoutSearch = document.querySelector('#handout-search');
+  const handoutCategories = document.querySelectorAll('.handout-category');
+  const handoutNoResults = document.querySelector('.handout-no-results');
+
+  if (handoutSearch && handoutCategories.length) {
+    handoutCategories.forEach((category) => {
+      const count = category.querySelectorAll('.handout-list li').length;
+      category.dataset.total = String(count);
+    });
+
+    handoutSearch.addEventListener('input', () => {
+      const query = handoutSearch.value.trim().toLowerCase();
+      let totalMatches = 0;
+
+      handoutCategories.forEach((category) => {
+        const items = category.querySelectorAll('.handout-list li');
+        let categoryMatches = 0;
+
+        items.forEach((item) => {
+          const matches = !query || item.textContent.toLowerCase().includes(query);
+          item.hidden = !matches;
+          if (matches) categoryMatches += 1;
+        });
+
+        category.hidden = categoryMatches === 0;
+        if (query && categoryMatches) category.open = true;
+
+        const count = category.querySelector('.handout-count');
+        if (count) {
+          count.textContent = query
+            ? `${categoryMatches} ${categoryMatches === 1 ? 'match' : 'matches'}`
+            : `${category.dataset.total} handouts`;
+        }
+
+        totalMatches += categoryMatches;
+      });
+
+      if (handoutNoResults) handoutNoResults.hidden = totalMatches !== 0;
+    });
+  }
 });

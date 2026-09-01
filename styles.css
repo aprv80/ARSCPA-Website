@@ -651,6 +651,127 @@ h1 {
   font-size: 1.15rem;
 }
 
+.handout-search {
+  margin-bottom: 2.5rem;
+}
+
+.handout-search label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.handout-search input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(15, 35, 64, 0.18);
+  border-radius: 0.7rem;
+  background: white;
+  color: var(--navy);
+  font: inherit;
+}
+
+.handout-search input:focus {
+  border-color: var(--blue);
+  outline: 3px solid rgba(37, 99, 235, 0.12);
+}
+
+.handout-categories {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.handout-category {
+  overflow: hidden;
+  border: 1px solid rgba(15, 35, 64, 0.12);
+  border-radius: 0.8rem;
+  background: white;
+}
+
+.handout-category[hidden],
+.handout-list li[hidden] {
+  display: none;
+}
+
+.handout-category summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  background: var(--cream);
+  color: var(--navy);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.handout-category summary::-webkit-details-marker {
+  display: none;
+}
+
+.handout-category summary::before {
+  content: "›";
+  color: var(--blue);
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 160ms ease;
+}
+
+.handout-category[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.handout-count {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.handout-list {
+  display: block;
+}
+
+.handout-list li + li {
+  border-top: 1px solid rgba(15, 35, 64, 0.08);
+}
+
+.handout-list a {
+  min-height: 0;
+  padding: 0.72rem 1rem;
+  border: 0;
+  border-radius: 0;
+  background: white;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.handout-list a::before {
+  content: "PDF";
+  flex: 0 0 auto;
+  padding: 0.18rem 0.35rem;
+  border-radius: 0.25rem;
+  background: var(--navy);
+  color: white;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+}
+
+.handout-list a:hover {
+  transform: none;
+  background: var(--cream);
+  box-shadow: none;
+}
+
+.handout-no-results {
+  margin: 1.5rem 0 0;
+  color: var(--muted);
+  text-align: center;
+}
+
 .portal-actions {
   display: flex;
   flex-wrap: wrap;
