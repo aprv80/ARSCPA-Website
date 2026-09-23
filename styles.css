@@ -798,41 +798,6 @@ h1 {
   color: var(--navy);
 }
 
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 35, 64, 0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  z-index: 1000;
-}
-
-.modal-backdrop.is-open {
-  display: flex;
-}
-
-.modal-card {
-  background: white;
-  width: min(100%, 460px);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 20px 45px rgba(15, 35, 64, 0.2);
-}
-
-.modal-card h3 {
-  margin-top: 0;
-  color: var(--navy);
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-}
-
 .section-alt a {
   display: inline-block;
   margin-top: 0.5rem;
