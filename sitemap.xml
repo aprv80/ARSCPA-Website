@@ -10,6 +10,18 @@
     <loc>https://www.arscpa.com/industries.html</loc>
   </url>
   <url>
+    <loc>https://www.arscpa.com/industries/medical-professionals.html</loc>
+  </url>
+  <url>
+    <loc>https://www.arscpa.com/industries/real-estate.html</loc>
+  </url>
+  <url>
+    <loc>https://www.arscpa.com/industries/gas-stations.html</loc>
+  </url>
+  <url>
+    <loc>https://www.arscpa.com/industries/it-consultants.html</loc>
+  </url>
+  <url>
     <loc>https://www.arscpa.com/contact.html</loc>
   </url>
   <url>
@@ -21,8 +33,11 @@
   <url>
     <loc>https://www.arscpa.com/services/tax-services.html</loc>
   </url>
-    <url>
+  <url>
     <loc>https://www.arscpa.com/services/advisory-services.html</loc>
+  </url>
+  <url>
+    <loc>https://www.arscpa.com/services/business-formation.html</loc>
   </url>
   <url>
     <loc>https://www.arscpa.com/articles/common-payroll-pitfalls.html</loc>

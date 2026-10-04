@@ -1033,3 +1033,115 @@ a.my-link:hover {
     grid-template-columns: 1fr;
   }
 }
+
+.formation-intro {
+  max-width: 880px;
+}
+
+.formation-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.formation-steps article {
+  border-top: 3px solid var(--gold);
+  padding-top: 1rem;
+}
+
+.formation-steps span {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: var(--navy);
+  color: white;
+  font-weight: 700;
+}
+
+.formation-steps h3 {
+  color: var(--navy);
+}
+
+.faq-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  overflow: hidden;
+  border: 1px solid rgba(15, 35, 64, 0.12);
+  border-radius: 0.85rem;
+  background: white;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  padding: 1rem 3rem 1rem 1.1rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.faq-item summary:hover,
+.faq-item summary:focus-visible {
+  background: var(--cream);
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 0 1.1rem 1.1rem;
+  color: var(--muted);
+}
+
+.formation-cta {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  background: var(--navy);
+  color: white;
+}
+
+.formation-cta h2,
+.formation-cta .eyebrow {
+  color: white;
+}
+
+.formation-cta .btn {
+  flex: 0 0 auto;
+}
+
+.official-resources {
+  padding-top: 0;
+}
+
+.official-resources h2 {
+  color: var(--navy);
+  font-size: 1.15rem;
+}
+
+.content-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .formation-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 580px) {
+  .formation-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .formation-cta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,5 @@
+# Generated previews and temporary working files
+tmp/
+
+# Generated flyers and other exported artifacts
+output/
